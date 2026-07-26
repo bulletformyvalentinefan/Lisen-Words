@@ -31,12 +31,12 @@ func AuthenticateUser(db *sql.DB, username, password string) (int64, error) {
 
 	err := db.QueryRow(q, username).Scan(&id, &storeHash)
 	if err != nil {
-		return 0, nil
+		return 0, err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(storeHash), []byte(password))
 	if err != nil {
-		return 0, nil 
+		return 0, err 
 	}
 
 	return id, nil
